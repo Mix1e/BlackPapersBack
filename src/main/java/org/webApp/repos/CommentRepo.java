@@ -1,7 +1,7 @@
 package org.webApp.repos;
 
 import org.springframework.stereotype.Repository;
-import org.webApp.model.Comment;
+import org.webApp.models.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

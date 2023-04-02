@@ -1,7 +1,6 @@
 package org.webApp.security;
 
 import lombok.Data;
-import org.webApp.enums.Role;
 
 @Data
 public class JwtResponse {

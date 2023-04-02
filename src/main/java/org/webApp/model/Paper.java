@@ -1,16 +1,18 @@
-package org.webApp.models;
+package org.webApp.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
+@Getter
+@Setter
 @Data
-@RequiredArgsConstructor
-@Table(name = "papers")
+@Table(name = "paper")
+@Builder
 public class Paper {
 
     @Id
@@ -30,13 +32,26 @@ public class Paper {
     @Column
     private Long likes;
 
+    @Column
+    @CreationTimestamp
+    private Date updated;
+
     @ManyToOne
     @JoinColumn(name="viewer_nick", referencedColumnName = "nick_name")
     private Viewer viewer;
 
-    @Column
-    @CreationTimestamp
-    private Date dateOfUpdate;
+    public Paper() {}
+
+    public Paper(Long id, String name, String description, String content, Long views, Long likes, Date updated, Viewer viewer) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.content = content;
+        this.views = views;
+        this.likes = likes;
+        this.updated = updated;
+        this.viewer = viewer;
+    }
 
     public void incViews() {
         views++;

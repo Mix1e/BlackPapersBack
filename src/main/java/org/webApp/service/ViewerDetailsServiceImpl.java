@@ -1,4 +1,4 @@
-package org.webApp.services;
+package org.webApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webApp.security.ViewerDetailsImpl;
-import org.webApp.models.Viewer;
+import org.webApp.model.Viewer;
 import org.webApp.repos.ViewerRepo;
 
 @Service

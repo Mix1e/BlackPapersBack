@@ -1,8 +1,9 @@
-package org.webApp.services;
+package org.webApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webApp.models.Comment;
+import org.webApp.dto.CommentDto;
+import org.webApp.model.Comment;
 import org.webApp.repos.CommentRepo;
 
 import javax.transaction.Transactional;
@@ -17,16 +18,16 @@ public class CommentService {
         this.commentRepo = commentRepo;
     }
     @Transactional
-    public List<Comment> findAllByPaperId(Long id) {
-        return commentRepo.findAllCommentsByPaperId(id);
+    public List<CommentDto> findAllByPaperId(Long id) {
+        return commentRepo.findAllCommentsByPaperId(id).stream().map(CommentDto::fromEntity).toList();
     }
     @Transactional
-    public Comment findCommentById(Long id) {
-        return commentRepo.findCommentById(id);
+    public CommentDto findCommentById(Long id) {
+        return CommentDto.fromEntity(commentRepo.findCommentById(id));
     }
     @Transactional
-    public Comment addComment(Comment comment) {
-        return commentRepo.save(comment);
+    public CommentDto addComment(Comment comment) {
+        return CommentDto.fromEntity(commentRepo.save(comment));
     }
 
     @Transactional
@@ -34,8 +35,8 @@ public class CommentService {
         commentRepo.deleteById(id);
     }
     @Transactional
-    public Comment updateComment(Comment comment) {
-        return commentRepo.save(comment);
+    public CommentDto updateComment(Comment comment) {
+        return CommentDto.fromEntity(commentRepo.save(comment));
     }
 
     @Transactional

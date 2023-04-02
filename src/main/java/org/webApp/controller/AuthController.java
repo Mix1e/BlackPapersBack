@@ -1,4 +1,4 @@
-package org.webApp.controllers;
+package org.webApp.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.webApp.enums.Role;
-import org.webApp.models.Viewer;
+import org.webApp.model.Viewer;
 import org.webApp.repos.ViewerRepo;
 import org.webApp.security.*;
 

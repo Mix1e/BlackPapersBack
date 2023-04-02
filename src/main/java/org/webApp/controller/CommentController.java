@@ -1,11 +1,12 @@
-package org.webApp.controllers;
+package org.webApp.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.webApp.models.Comment;
-import org.webApp.services.CommentService;
+import org.webApp.dto.CommentDto;
+import org.webApp.model.Comment;
+import org.webApp.service.CommentService;
 
 import java.util.List;
 
@@ -22,22 +23,19 @@ public class CommentController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Comment>> getAllCommentsByPaperId(@PathVariable("id") Long id) {
-        List<Comment> comments = commentService.findAllByPaperId(id);
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+    public ResponseEntity<List<CommentDto>> getAllCommentsByPaperId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(commentService.findAllByPaperId(id), HttpStatus.OK);
     }
     @GetMapping("/all/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Comment> getAllCommentsById(@PathVariable("id") Long id) {
-        Comment comments = commentService.findCommentById(id);
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+    public ResponseEntity<CommentDto> getAllCommentsById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(commentService.findCommentById(id), HttpStatus.OK);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
-        Comment newComment = commentService.addComment(comment);
-        return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+    public ResponseEntity<CommentDto> addComment(@RequestBody Comment comment) {
+        return new ResponseEntity<>(commentService.addComment(comment), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -49,8 +47,7 @@ public class CommentController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) {
-        Comment updatedComment = commentService.updateComment(comment);
-        return new ResponseEntity<>(updatedComment, HttpStatus.CREATED);
+    public ResponseEntity<CommentDto> updateComment(@RequestBody Comment comment) {
+        return new ResponseEntity<>(commentService.updateComment(comment), HttpStatus.CREATED);
     }
 }

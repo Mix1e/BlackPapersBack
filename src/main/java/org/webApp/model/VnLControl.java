@@ -1,33 +1,20 @@
-package org.webApp.models;
-
+package org.webApp.model;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-@Table(name="comments")
-public class Comment {
+@Builder
+public class VnLControl {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(columnDefinition="TEXT")
-    @Lob
-    private String content;
-
-    @Column
-    private Long likes;
-
-    @Column
-    @CreationTimestamp
-    private Date dateOfUpdate;
 
     @ManyToOne
     @JoinColumn(name="paper_id", referencedColumnName = "id")
@@ -37,4 +24,13 @@ public class Comment {
     @JoinColumn(name="viewer_nick", referencedColumnName = "nick_name")
     private Viewer viewer;
 
+    @Column
+    private boolean liked;
+
+    public VnLControl(Long id, Paper paper, Viewer viewer, boolean liked) {
+        this.id = id;
+        this.paper = paper;
+        this.viewer = viewer;
+        this.liked = liked;
+    }
 }

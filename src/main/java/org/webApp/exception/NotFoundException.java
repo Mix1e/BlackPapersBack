@@ -1,4 +1,4 @@
-package org.webApp.exceptions;
+package org.webApp.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {

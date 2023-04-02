@@ -1,11 +1,9 @@
-package org.webApp.services;
+package org.webApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webApp.exceptions.NotFoundException;
-import org.webApp.models.Comment;
-import org.webApp.models.Viewer;
-import org.webApp.models.VnLControl;
+import org.webApp.exception.NotFoundException;
+import org.webApp.model.VnLControl;
 import org.webApp.repos.VnLControlRepo;
 
 import javax.transaction.Transactional;

@@ -1,16 +1,13 @@
-package org.webApp.controllers;
+package org.webApp.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.webApp.models.Paper;
-import org.webApp.models.Viewer;
-import org.webApp.models.VnLControl;
-import org.webApp.services.PaperService;
-import org.webApp.services.VnLControlService;
-
-import java.util.List;
+import org.webApp.dto.PaperDto;
+import org.webApp.model.Paper;
+import org.webApp.model.VnLControl;
+import org.webApp.service.PaperService;
+import org.webApp.service.VnLControlService;
 
 @RestController
 @RequestMapping("/control")
@@ -28,7 +25,7 @@ public class VnLControlController {
     @PostMapping("/add")
     public ResponseEntity<VnLControl> addControl(@RequestBody VnLControl control) {
         VnLControl newControl = controlService.addControl(control);
-        Paper newPaper = paperService.findPaperById(newControl.getPaper().getId());
+        Paper newPaper = PaperDto.toEntity(paperService.findPaperById(newControl.getPaper().getId()));
         newPaper.incViews();
         paperService.updatePaper(newPaper);
         return new ResponseEntity<>(newControl, HttpStatus.CREATED);
@@ -53,7 +50,7 @@ public class VnLControlController {
 
     @PutMapping("/like")
     public ResponseEntity<VnLControl> likesControl(@RequestBody VnLControl control) {
-        Paper newPaper = paperService.findPaperById(control.getPaper().getId());
+        Paper newPaper = PaperDto.toEntity(paperService.findPaperById(control.getPaper().getId()));
         control.setLiked(!control.isLiked());
         if (control.isLiked())
             newPaper.incLikes();

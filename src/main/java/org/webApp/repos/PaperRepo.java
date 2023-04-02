@@ -1,7 +1,7 @@
 package org.webApp.repos;
 
 import org.springframework.stereotype.Repository;
-import org.webApp.models.Paper;
+import org.webApp.model.Paper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

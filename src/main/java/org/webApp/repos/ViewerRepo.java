@@ -2,7 +2,7 @@ package org.webApp.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.webApp.models.Viewer;
+import org.webApp.model.Viewer;
 
 import java.util.Optional;
 

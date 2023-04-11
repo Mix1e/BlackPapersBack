@@ -34,8 +34,8 @@ public class PaperService {
     }
 
     @Transactional
-    public PaperDto updatePaper(Paper paper) {
-        return PaperDto.fromEntity(paperRepo.save(paper));
+    public PaperDto updatePaper(PaperDto paperDto) {
+        return PaperDto.fromEntity(paperRepo.save(PaperDto.toEntity(paperDto)));
     }
     @Transactional
     public void deletePaper(Long id) {

@@ -21,10 +21,10 @@ public class ViewerDto {
     }
 
     public static Viewer toEntity(ViewerDto viewerDto) {
-        return Viewer.builder()
-                .nickName(viewerDto.getNickName())
-                .description(viewerDto.getDescription())
-                .role(viewerDto.getRole())
-                .build();
+        return new Viewer(
+                viewerDto.getNickName(),
+                viewerDto.getDescription(),
+                viewerDto.getRole()
+                );
     }
 }

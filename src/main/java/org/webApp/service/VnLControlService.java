@@ -1,7 +1,7 @@
 package org.webApp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webApp.dto.VnLControlDto;
 import org.webApp.exception.NotFoundException;
 import org.webApp.model.VnLControl;
 import org.webApp.repos.VnLControlRepo;
@@ -13,24 +13,25 @@ public class VnLControlService {
 
     private final VnLControlRepo controlRepo;
 
-    @Autowired
     public VnLControlService(VnLControlRepo controlRepo) {
         this.controlRepo = controlRepo;
     }
 
     @Transactional
-    public VnLControl addControl(VnLControl control) {
-        return controlRepo.save(control);
+    public VnLControlDto addControl(VnLControlDto controlDto) {
+        return VnLControlDto.fromEntity(controlRepo.save(VnLControlDto.toEntity(controlDto)));
     }
 
     @Transactional
-    public VnLControl updateControl(VnLControl control) {
-        return controlRepo.save(control);
+    public VnLControlDto updateControl(VnLControlDto controlDto) {
+        return VnLControlDto.fromEntity(controlRepo.save(VnLControlDto.toEntity(controlDto)));
     }
 
     @Transactional
-    public VnLControl findControl(Long id, String nickName) {
-        return (VnLControl) controlRepo.findVnLControlByPaperIdAndViewerNickName(id, nickName).orElseThrow(() -> new NotFoundException("Такого пользователя не существует"));
+    public VnLControlDto findControl(Long id, String nickName) {
+        return VnLControlDto.fromEntity(
+                (VnLControl) controlRepo.findVnLControlByPaperIdAndViewerNickName(id, nickName).orElseThrow(() -> new NotFoundException("Такого пользователя не существует"))
+                );
     }
 
     @Transactional

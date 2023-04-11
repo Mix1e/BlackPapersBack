@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Data
 @Table(name = "paper")
-@Builder
 public class Paper {
 
     @Id
@@ -52,17 +51,4 @@ public class Paper {
         this.updated = updated;
         this.viewer = viewer;
     }
-
-    public void incViews() {
-        views++;
-    }
-
-    public void incLikes() {
-        likes++;
-    }
-
-    public void decLikes() {
-        likes--;
-    }
-
 }

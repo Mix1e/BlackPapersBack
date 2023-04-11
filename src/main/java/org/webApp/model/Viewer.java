@@ -1,16 +1,15 @@
 package org.webApp.model;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.webApp.enums.Role;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-@Builder
 @Table(name = "viewers")
 public class Viewer {
 
@@ -27,6 +26,12 @@ public class Viewer {
     @Column
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public Viewer(String nickName, String description, Role role) {
+        this.nickName = nickName;
+        this.description = description;
+        this.role = role;
+    }
 
     public Viewer(String nickName, String password, String description, Role role) {
         this.nickName = nickName;

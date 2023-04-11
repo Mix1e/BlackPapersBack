@@ -6,9 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.webApp.dto.PaperDto;
 import org.webApp.model.Paper;
-import org.webApp.service.CommentService;
 import org.webApp.service.PaperService;
-import org.webApp.service.VnLControlService;
 
 import java.util.List;
 
@@ -42,14 +40,13 @@ public class PaperController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<PaperDto> updatePaper(@RequestBody Paper paper) {
-        return new ResponseEntity<>(paperService.updatePaper(paper), HttpStatus.CREATED);
+    public ResponseEntity<PaperDto> updatePaper(@RequestBody PaperDto paperDto) {
+        return new ResponseEntity<>(paperService.updatePaper(paperDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> deletePaper(@PathVariable("id") Long id) {
-
         paperService.deletePaper(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

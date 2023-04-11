@@ -8,13 +8,15 @@ import javax.persistence.*;
 @Entity
 @Data
 @RequiredArgsConstructor
-@Builder
 public class VnLControl {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private boolean liked;
 
     @ManyToOne
     @JoinColumn(name="paper_id", referencedColumnName = "id")
@@ -24,13 +26,10 @@ public class VnLControl {
     @JoinColumn(name="viewer_nick", referencedColumnName = "nick_name")
     private Viewer viewer;
 
-    @Column
-    private boolean liked;
-
-    public VnLControl(Long id, Paper paper, Viewer viewer, boolean liked) {
+    public VnLControl(Long id, boolean liked, Paper paper, Viewer viewer) {
         this.id = id;
+        this.liked = liked;
         this.paper = paper;
         this.viewer = viewer;
-        this.liked = liked;
     }
 }

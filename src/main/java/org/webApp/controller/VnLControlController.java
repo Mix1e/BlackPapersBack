@@ -3,38 +3,42 @@ package org.webApp.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.webApp.dto.PaperDto;
-import org.webApp.model.Paper;
-import org.webApp.model.VnLControl;
+import org.webApp.dto.*;
 import org.webApp.service.PaperService;
+import org.webApp.service.ViewerService;
 import org.webApp.service.VnLControlService;
 
 @RestController
 @RequestMapping("/control")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VnLControlController {
 
     private final VnLControlService controlService;
     private final PaperService paperService;
+    private final ViewerService viewerService;
 
-    public VnLControlController(VnLControlService controlService, PaperService paperService) {
+    public VnLControlController(VnLControlService controlService, PaperService paperService, ViewerService viewerService) {
         this.controlService = controlService;
         this.paperService = paperService;
+        this.viewerService = viewerService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<VnLControl> addControl(@RequestBody VnLControl control) {
-        VnLControl newControl = controlService.addControl(control);
-        Paper newPaper = PaperDto.toEntity(paperService.findPaperById(newControl.getPaper().getId()));
-        newPaper.incViews();
-        paperService.updatePaper(newPaper);
-        return new ResponseEntity<>(newControl, HttpStatus.CREATED);
+    public ResponseEntity<VnLControlDto> addControl(@RequestBody CreateControlRequest createControlRequest) {
+        PaperDto paperDto = paperService.findPaperById(createControlRequest.getPaperId());
+        ViewerDto viewerDto = viewerService.findViewerByNickName(createControlRequest.getViewerName());
+        paperDto.incViews();
+        paperService.updatePaper(paperDto);
+        VnLControlDto newControl = new VnLControlDto(null, paperDto, viewerDto, createControlRequest.getLiked());
+        return new ResponseEntity<>(controlService.addControl(newControl), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}/{nickName}")
-    public ResponseEntity<VnLControl> getControl(@PathVariable("id") Long id, @PathVariable("nickName") String nickName) {
-        VnLControl control = controlService.findControl(id, nickName);
-        return new ResponseEntity<>(control, HttpStatus.OK);
+    public ResponseEntity<VnLControlDto> getControl(@PathVariable("id") Long id, @PathVariable("nickName") String nickName) {
+        return new ResponseEntity<>(
+                controlService.findControl(id, nickName),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/exist/{id}/{nickName}")
@@ -43,21 +47,21 @@ public class VnLControlController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<VnLControl> updateControl(@RequestBody VnLControl control) {
-        VnLControl updatedControl = controlService.updateControl(control);
-        return new ResponseEntity<>(updatedControl, HttpStatus.OK);
+    public ResponseEntity<VnLControlDto> updateControl(@RequestBody VnLControlDto controlDto) {
+        return new ResponseEntity<>(controlService.updateControl(controlDto), HttpStatus.OK);
     }
 
     @PutMapping("/like")
-    public ResponseEntity<VnLControl> likesControl(@RequestBody VnLControl control) {
-        Paper newPaper = PaperDto.toEntity(paperService.findPaperById(control.getPaper().getId()));
-        control.setLiked(!control.isLiked());
-        if (control.isLiked())
-            newPaper.incLikes();
+    public ResponseEntity<VnLControlDto> likesControl(@RequestBody LikeRequest likeRequest) {
+        VnLControlDto controlDto = controlService.findControl(likeRequest.getPaperId(), likeRequest.getNickname());
+        PaperDto paperDto = paperService.findPaperById(likeRequest.getPaperId());
+
+        controlDto.setLiked(!controlDto.isLiked());
+        if (controlDto.isLiked())
+            paperDto.incLikes();
         else
-            newPaper.decLikes();
-        paperService.updatePaper(newPaper);
-        VnLControl updatedControl = controlService.updateControl(control);
-        return new ResponseEntity<>(updatedControl, HttpStatus.OK);
+            paperDto.decLikes();
+        paperService.updatePaper(paperDto);
+        return new ResponseEntity<>(controlService.updateControl(controlDto), HttpStatus.OK);
     }
 }

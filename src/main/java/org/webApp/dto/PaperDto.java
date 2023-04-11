@@ -3,9 +3,9 @@ package org.webApp.dto;
 import lombok.Builder;
 import lombok.Data;
 import org.webApp.model.Paper;
-import org.webApp.model.Viewer;
 
 import java.util.Date;
+
 @Data
 @Builder
 public class PaperDto {
@@ -17,6 +17,18 @@ public class PaperDto {
     private Long likes;
     private Date updated;
     private ViewerDto viewer;
+
+    public void incViews() {
+        views++;
+    }
+
+    public void incLikes() {
+        likes++;
+    }
+
+    public void decLikes() {
+        likes--;
+    }
 
     public static PaperDto fromEntity(Paper paper) {
         return PaperDto.builder()
@@ -32,15 +44,15 @@ public class PaperDto {
     }
 
     public static Paper toEntity(PaperDto paperDTO) {
-        return Paper.builder()
-                .id(paperDTO.getId())
-                .name(paperDTO.getName())
-                .description(paperDTO.getDescription())
-                .content(paperDTO.getContent())
-                .views(paperDTO.getViews())
-                .likes(paperDTO.getLikes())
-                .updated(paperDTO.getUpdated())
-                .viewer(ViewerDto.toEntity(paperDTO.getViewer()))
-                .build();
+        return new Paper(
+                paperDTO.getId(),
+                paperDTO.getName(),
+                paperDTO.getDescription(),
+                paperDTO.getContent(),
+                paperDTO.getViews(),
+                paperDTO.getLikes(),
+                paperDTO.getUpdated(),
+                ViewerDto.toEntity(paperDTO.getViewer())
+        );
     }
 }

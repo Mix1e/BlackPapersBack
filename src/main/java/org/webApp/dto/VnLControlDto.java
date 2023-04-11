@@ -2,6 +2,7 @@ package org.webApp.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.webApp.model.Comment;
 import org.webApp.model.Paper;
 import org.webApp.model.Viewer;
@@ -20,21 +21,28 @@ public class VnLControlDto {
     private ViewerDto viewer;
     private boolean liked;
 
+    public VnLControlDto(Long id, PaperDto paper, ViewerDto viewer, boolean liked) {
+        this.id = id;
+        this.paper = paper;
+        this.viewer = viewer;
+        this.liked = liked;
+    }
+
     public static VnLControlDto fromEntity(VnLControl vnLControl) {
         return VnLControlDto.builder()
                 .id(vnLControl.getId())
+                .liked(vnLControl.isLiked())
                 .paper(PaperDto.fromEntity(vnLControl.getPaper()))
                 .viewer(ViewerDto.fromEntity(vnLControl.getViewer()))
-                .liked(vnLControl.isLiked())
                 .build();
     }
 
     public static VnLControl toEntity(VnLControlDto vnLControlDto) {
-        return VnLControl.builder()
-                .id(vnLControlDto.getId())
-                .paper(PaperDto.toEntity(vnLControlDto.getPaper()))
-                .viewer(ViewerDto.toEntity(vnLControlDto.getViewer()))
-                .liked(vnLControlDto.isLiked())
-                .build();
+        return new VnLControl(
+                vnLControlDto.getId(),
+                vnLControlDto.isLiked(),
+                PaperDto.toEntity(vnLControlDto.getPaper()),
+                ViewerDto.toEntity(vnLControlDto.getViewer())
+        );
     }
 }

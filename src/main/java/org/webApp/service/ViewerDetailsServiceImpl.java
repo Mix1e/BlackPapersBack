@@ -20,7 +20,7 @@ public class ViewerDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Viewer viewer = (Viewer) viewerRepo.findViewerByNickName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Пользователя с таким ником не существует:" + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователя с таким ником не существует:" + username.trim()));
         return ViewerDetailsImpl.build(viewer);
     }
 }

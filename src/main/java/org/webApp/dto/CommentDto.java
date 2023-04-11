@@ -28,13 +28,13 @@ public class CommentDto {
     }
 
     public static Comment toEntity(CommentDto commentDto) {
-        return Comment.builder()
-                .id(commentDto.getId())
-                .content(commentDto.getContent())
-                .likes(commentDto.getLikes())
-                .dateOfUpdate(commentDto.getDateOfUpdate())
-                .paper(PaperDto.toEntity(commentDto.getPaper()))
-                .viewer(ViewerDto.toEntity(commentDto.getViewer()))
-                .build();
+        return new Comment(
+                commentDto.getId(),
+                commentDto.getContent(),
+                commentDto.getLikes(),
+                commentDto.getDateOfUpdate(),
+                PaperDto.toEntity(commentDto.getPaper()),
+                ViewerDto.toEntity(commentDto.getViewer())
+        );
     }
 }

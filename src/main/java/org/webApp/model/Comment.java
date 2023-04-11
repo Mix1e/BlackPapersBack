@@ -12,7 +12,6 @@ import java.util.Date;
 @Data
 @RequiredArgsConstructor
 @Table(name="comment")
-@Builder
 public class Comment {
 
     @Id

@@ -27,6 +27,7 @@ public class CommentService {
     }
     @Transactional
     public CommentDto addComment(Comment comment) {
+        comment.setLikes(Long.valueOf( 0));
         return CommentDto.fromEntity(commentRepo.save(comment));
     }
 

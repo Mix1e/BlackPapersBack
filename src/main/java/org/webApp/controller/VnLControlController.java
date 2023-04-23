@@ -9,8 +9,8 @@ import org.webApp.service.ViewerService;
 import org.webApp.service.VnLControlService;
 
 @RestController
-@RequestMapping("/control")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/control")
+@CrossOrigin
 public class VnLControlController {
 
     private final VnLControlService controlService;
@@ -53,8 +53,8 @@ public class VnLControlController {
 
     @PutMapping("/like")
     public ResponseEntity<VnLControlDto> likesControl(@RequestBody LikeRequest likeRequest) {
-        VnLControlDto controlDto = controlService.findControl(likeRequest.getPaperId(), likeRequest.getNickname());
-        PaperDto paperDto = paperService.findPaperById(likeRequest.getPaperId());
+        VnLControlDto controlDto = controlService.findControl(likeRequest.getId(), likeRequest.getNickname());
+        PaperDto paperDto = paperService.findPaperById(likeRequest.getId());
 
         controlDto.setLiked(!controlDto.isLiked());
         if (controlDto.isLiked())

@@ -16,6 +16,14 @@ public class CommentDto {
     private PaperDto paper;
     private ViewerDto viewer;
 
+    public void incLikes() {
+        likes++;
+    }
+
+    public void decLikes() {
+        likes--;
+    }
+
     public static CommentDto fromEntity(Comment comment) {
         return CommentDto.builder()
                 .id(comment.getId())

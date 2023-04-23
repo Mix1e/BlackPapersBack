@@ -20,8 +20,8 @@ import org.webApp.security.*;
 
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("/api/auth")
+@CrossOrigin
 @AllArgsConstructor
 public class AuthController {
 

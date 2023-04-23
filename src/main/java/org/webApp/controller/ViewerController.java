@@ -14,8 +14,8 @@ import org.webApp.service.VnLControlService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/viewers")
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("/api/viewers")
+@CrossOrigin
 public class ViewerController {
 
     private final ViewerService viewerService;

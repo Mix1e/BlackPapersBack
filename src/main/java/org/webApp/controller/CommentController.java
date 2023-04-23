@@ -11,8 +11,8 @@ import org.webApp.service.CommentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("/api/comments")
+@CrossOrigin
 public class CommentController {
 
     private final CommentService commentService;
@@ -21,14 +21,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/all/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<CommentDto>> getAllCommentsByPaperId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(commentService.findAllByPaperId(id), HttpStatus.OK);
     }
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<CommentDto> getAllCommentsById(@PathVariable("id") Long id) {
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable("id") Long id) {
         return new ResponseEntity<>(commentService.findCommentById(id), HttpStatus.OK);
     }
 

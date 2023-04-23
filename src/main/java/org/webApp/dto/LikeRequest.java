@@ -1,20 +1,20 @@
 package org.webApp.dto;
 
 public class LikeRequest {
-    private Long paperId;
+    private Long id;
     private String nickName;
 
-    public LikeRequest(Long paperId, String nickName) {
-        this.paperId = paperId;
+    public LikeRequest(Long id, String nickName) {
+        this.id = id;
         this.nickName = nickName;
     }
 
-    public Long getPaperId() {
-        return paperId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPaperId(Long paperId) {
-        this.paperId = paperId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNickname() {

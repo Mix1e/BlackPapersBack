@@ -11,8 +11,8 @@ import org.webApp.service.PaperService;
 import java.util.List;
 
 @RestController
-@RequestMapping
-@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("/api")
+@CrossOrigin
 public class PaperController {
 
     private final PaperService paperService;
